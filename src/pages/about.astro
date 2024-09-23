@@ -1,4 +1,6 @@
 ---
+import type { NavigationTypeString } from "astro:transitions/client";
+
 const pageTitle = "About Me";
 const identity = {
     firstname: "Bill",
@@ -8,6 +10,14 @@ const identity = {
     hobbies: ["Writing", "Drawing", "Birding"],
 };
 const skills = ["HTML", "CSS", "JavaScript", "React", "Astro", "Writing Docs"];
+
+const happy = true;
+const finished = false;
+const goal = 3;
+
+const skillColor = "navy";
+const fontWeight = "bold";
+const textCase = "uppercase";
 ---
 
 <html lang="en">
@@ -17,6 +27,17 @@ const skills = ["HTML", "CSS", "JavaScript", "React", "Astro", "Writing Docs"];
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
         <title>{pageTitle}</title>
+        <style define:vars={{skillColor, fontWeight, textCase}}>
+            h1 {
+                color: purple;
+                font-size: 4rem;
+            }
+            .skill {
+                color: var(--skillColor);
+                font-weight: var(--fontWeight);
+                text-transform: var(--textCase);
+            }
+        </style>
 	</head>
 	<body>
         <a href="/">HOME</a>
@@ -25,7 +46,7 @@ const skills = ["HTML", "CSS", "JavaScript", "React", "Astro", "Writing Docs"];
 		<h1>Astro</h1>
 		<h1>{pageTitle}</h1>
         <br/>
-        <p>This page is an about page.</p>
+        <p>This page is an about page</p>
         <ul>
             <li>My name is {identity.firstname}</li>
             <li>I live in {identity.country}and I work as {identity.occupation}</li>
@@ -33,5 +54,13 @@ const skills = ["HTML", "CSS", "JavaScript", "React", "Astro", "Writing Docs"];
                 <li>Two of my hobbies are: {identity.hobbies[0]} and {identity.hobbies[1]}</li>
             }
         </ul>
+        <p>My skills are: </p>
+        <ul>
+            {skills.map((skill) => <li class="skill">{skill}</li>)}
+        </ul>
+
+        {happy && <p>I am happy to be learning astro</p>}
+        {finished && <p>I finished this tutorail</p>}
+        {goal === 3 ? <p>My goal is to finish in 3 days</p> : <p>My goal is not 3</p>}
 	</body>
 </html>
